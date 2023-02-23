@@ -1,0 +1,7 @@
+npm  install vue
+npm install --global vue-cli
+vue init webpack myproject
+
+npm install vue-router
+npm install axios --save
+npm i element-ui -S

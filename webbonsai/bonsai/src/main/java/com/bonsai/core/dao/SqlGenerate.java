@@ -70,12 +70,12 @@ public class SqlGenerate {
                 if(field.isAnnotationPresent(ID.class)
                         || !field.isAnnotationPresent(TableColumn.class)
                         || (hasCheckTime == false && (field.isAnnotationPresent(CheckTime.class)))) continue;
-                keys += String.format("%s,", ((TableColumn) field.getAnnotation(TableColumn.class)).name());
                 Class classValue = field.getType();
                 Method getMethod = entityClass.getMethod(getMethodGetByField(field));
 
                 Object value = getMethod.invoke(entity);
                 if(value != null){
+                    keys += String.format("%s,", ((TableColumn) field.getAnnotation(TableColumn.class)).name());
                     if(classValue.isArray() || Collection.class.isAssignableFrom(classValue) || Map.class.isAssignableFrom(classValue)){
                         values += "'" + new Gson().toJson(getMethod.invoke(entity)) + "',";
                     }else if(classValue.equals(String.class)){

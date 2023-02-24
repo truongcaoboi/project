@@ -4,7 +4,9 @@ import com.bonsai.core.annotation.TableColumn;
 import com.bonsai.core.annotation.TableName;
 import com.bonsai.core.dao.BonsaiEntity;
 
-@TableName(name = "bill", hasCheckTime = true)
+import java.util.List;
+
+@TableName(name = "bills", hasCheckTime = true)
 public class Bill extends BonsaiEntity {
     @TableColumn(name = "code")
     public String code;
@@ -34,7 +36,12 @@ public class Bill extends BonsaiEntity {
     public String senderName;
 
     @TableColumn(name = "receiver_name")
-    public String receiver_name;
+    public String receiverName;
+
+    @TableColumn(name = "amount")
+    public Long amount;
+
+    public List<BillDetail> billDetail;
 
     public String getCode() {
         return code;
@@ -108,11 +115,19 @@ public class Bill extends BonsaiEntity {
         this.senderName = senderName;
     }
 
-    public String getReceiver_name() {
-        return receiver_name;
+    public String getReceiverName() {
+        return receiverName;
     }
 
-    public void setReceiver_name(String receiver_name) {
-        this.receiver_name = receiver_name;
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }

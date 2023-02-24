@@ -16,7 +16,7 @@
                         </div>
                         <div v-for="item in carts" class="product">
                             <div style="width: 30%; display: flex; justify-content: flex-start; align-items: center;">
-                                <el-button style="margin-right: 8px;" icon="el-icon-close" circle></el-button>
+                                <el-button style="margin-right: 8px;" icon="el-icon-close" circle @click="deleteItem(item.treeId)"></el-button>
                                 <img style="width: 75px;height: 90px;margin-right: 8px;" :src="getUrlOfResource(item.images)"/>
                                 {{ item.treeName }}
                             </div>
@@ -145,7 +145,6 @@
                             this.saveCart();
                         }
                     }
-                    store.setCarts(carts);
                 }
             },
             saveCart: function(){
@@ -162,6 +161,18 @@
                 });
                 localStorage.setItem("carts", JSON.stringify(cs));
                 store.setCarts(cs);
+            },
+            deleteItem: function(treeId){
+                let index = -1;
+                for(let i = 0; i<this.carts.length;i++){
+                    if(this.carts[i].treeId == treeId){
+                        index = i;
+                        break;
+                    }
+                }
+                if(index >= 0){
+                    this.carts.splice(index, 1);
+                }
             }
         },
         computed:{

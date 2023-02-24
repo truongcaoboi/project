@@ -28,7 +28,7 @@ CREATE TABLE `bills` (
   `status` int DEFAULT NULL,
   `sender` bigint DEFAULT NULL,
   `receiver` bigint DEFAULT NULL,
-  `address` varchar(200) DEFAULT NULL,
+  `address` varchar(250) DEFAULT NULL,
   `note` varchar(500) DEFAULT NULL,
   `typepay` int DEFAULT NULL,
   `feeship` bigint DEFAULT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE `bills` (
   `receiver_name` varchar(200) DEFAULT NULL,
   `amount` bigint DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,6 +47,7 @@ CREATE TABLE `bills` (
 
 LOCK TABLES `bills` WRITE;
 /*!40000 ALTER TABLE `bills` DISABLE KEYS */;
+INSERT INTO `bills` VALUES (7,'BILLd9b577eb7398',0,NULL,8,'Ha noi','',0,100000,1677265220144,1677265220144,NULL,'user a',450000),(8,'BILLd96534f6fce2',0,NULL,8,'Ha noi','',0,100000,1677266220413,1677266220413,NULL,'user a',450000),(9,'BILL38e7bc155c34',0,NULL,8,'Ha noi','',0,100000,1677267461199,1677267461199,NULL,'user a',1275000),(10,'BILL5a096fdabf45',0,NULL,8,'Ha noi','',0,100000,1677267583523,1677267583523,NULL,'user a',450000),(11,'BILLf7579a536a5f',0,NULL,8,'Ha noi Ha noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa noiHa','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',1,100000,1677268902732,1677268902732,NULL,'user a',1980000);
 /*!40000 ALTER TABLE `bills` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -59,4 +60,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-22  5:45:27
+-- Dump completed on 2023-02-25  3:22:56

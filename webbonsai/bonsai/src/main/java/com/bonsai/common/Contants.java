@@ -39,4 +39,10 @@ public class Contants {
         public static Integer NOT_LOGIN = 402;
         public static Integer NOT_LOGIN_ADMIN = 401;
     }
+
+    public static interface BillStatus{
+        public static Integer CREATE = 0;
+        public static Integer SHIP = 1;
+        public static Integer COMPLETE = 2;
+    }
 }

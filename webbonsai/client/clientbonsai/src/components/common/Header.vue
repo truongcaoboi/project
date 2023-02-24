@@ -2,7 +2,7 @@
     <div style="width: 100%;">
         <div class="header">
             <div class="header-left">
-                <div class="logo"></div>
+                <div class="logo" @click="$router.push('/')"></div>
                 <div class="shopname">Cây cảnh bonsai</div>
             </div>
             <div class="header-right">
@@ -43,6 +43,7 @@
         width: 50px;
         height: 50px;
         background-size: 50px 50px;
+        cursor: pointer;
     }
     .shopname{
         font-size: 20px;

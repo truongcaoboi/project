@@ -33,7 +33,7 @@ CREATE TABLE `bill_details` (
   `tree_name` varchar(200) DEFAULT NULL,
   `tree_code` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +42,7 @@ CREATE TABLE `bill_details` (
 
 LOCK TABLES `bill_details` WRITE;
 /*!40000 ALTER TABLE `bill_details` DISABLE KEYS */;
+INSERT INTO `bill_details` VALUES (22,7,1,1,450000,450000,0,'Cây đào bonsai','CODE_T1'),(23,8,1,1,450000,450000,0,'Cây đào bonsai','CODE_T1'),(24,9,2,3,500000,1275000,15,'Cấy mai bonsai','CODE_T2'),(25,10,1,1,450000,450000,0,'Cây đào bonsai','CODE_T1'),(26,11,1,1,450000,450000,0,'Cây đào bonsai','CODE_T1'),(27,11,2,1,500000,425000,15,'Cấy mai bonsai','CODE_T2'),(28,11,3,1,600000,480000,20,'Cây táo bonsai','CODE_T3'),(29,11,4,1,700000,525000,25,'Cây bưởi bonsai','CODE_T4');
 /*!40000 ALTER TABLE `bill_details` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -54,4 +55,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-02-22  5:45:27
+-- Dump completed on 2023-02-25  3:22:56

@@ -6,6 +6,8 @@ import Cart from '@/components/cart/Cart'
 import Login from '@/components/common/Login'
 import SignUp from '@/components/common/SignUp'
 import UserDetail from '@/components/user/UserDetail'
+import CreateBill from '@/components/bill/CreateBill'
+import ListBill from '@/components/bill/ListBill'
 
 Vue.use(Router)
 
@@ -41,6 +43,16 @@ export default new Router({
       path: '/userDetail',
       name: 'UserDetail',
       component: UserDetail,
+    },
+    {
+      path: '/createBill',
+      name: 'CreateBill',
+      component: CreateBill,
+    },
+    {
+      path: '/listBill',
+      name: 'ListBill',
+      component: ListBill,
     },
   ]
 })

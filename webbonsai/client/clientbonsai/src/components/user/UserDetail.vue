@@ -2,6 +2,10 @@
     <div>
         <Header></Header>
         <div class="panel">
+            <el-button type="default" @click="$router.push('/')">Xem gian hàng</el-button>
+            <el-button type="default" @click="$router.push('/listBill')">Xem hóa đơn</el-button>
+        </div>
+        <div class="panel">
             <div class="box-detail">
                 <div class="title">Thông tin chi tiết</div>
                 <el-form :model="params" ref="userDetail" label-width="150px" class="">
@@ -192,7 +196,7 @@
                             if(res.statusCode == 200){
                                 me.$message.success(res.message);
                             }else{
-                                me.$message.success(res.message);
+                                me.$message.error(res.message);
                                 if(res.statusCode == 402 || res.statusCode == 401){
                                     me.$router.push("/login");
                                 }

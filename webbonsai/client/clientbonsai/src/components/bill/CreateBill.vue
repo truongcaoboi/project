@@ -63,7 +63,7 @@
                     </div>
                     <div v-for="item in bill.billDetail" class="row-item">
                         <div class="proName">{{ item.treeName }} <b>x{{ item.count }}</b></div>
-                        <div class="amount">{{ item.amount }}</div>
+                        <div class="amount">{{ getStringForMoney(item.amount) }}</div>
                     </div>
                     <div class="row-item">
                         <div>Giao hàng</div>
@@ -71,14 +71,14 @@
                             <el-form-item label="">
                                 <el-radio-group v-model="bill.typePay" @change="typePayChange()">
                                     <div style="margin-bottom: 12px;"><el-radio :label="0">Nhận tại cửa hàng (<b>Miễn phí</b>)</el-radio></div>
-                                    <div><el-radio :label="1">Giao hàng tận nơi (<b>100.000đ</b>)</el-radio></div>
+                                    <div><el-radio :label="1">Giao hàng tận nơi (<b>{{ getStringForMoney(100000) }}</b>)</el-radio></div>
                                 </el-radio-group>
                             </el-form-item>
                         </div>
                     </div>
                     <div class="row-item">
                         <div class="proName"><b>Tổng</b></div>
-                        <div class="amount">{{ bill.amount }}</div>
+                        <div class="amount">{{ getStringForMoney(bill.amount) }}</div>
                     </div>
                     <div class="title">Trả tiền mặt khi nhận hàng</div>
                     <div style="margin-left: -145px;display: flex;justify-content: flex-start;">
@@ -305,6 +305,9 @@
                 if(this.bill.typePay == 1){
                     this.bill.amount += 100000;
                 }
+            },
+            getStringForMoney: function(money){
+                return new Intl.NumberFormat('vn-VN').format(money) + "đ";
             }
         },
 

@@ -20,13 +20,13 @@
                                 <img style="width: 75px;height: 90px;margin-right: 8px;" :src="getUrlOfResource(item.images)"/>
                                 {{ item.treeName }}
                             </div>
-                            <div style="width: 15%;">{{ item.amountUnit }}</div>
+                            <div style="width: 15%;">{{ getStringForMoney(item.amountUnit) }}</div>
                             <div style="width: 10%;">{{ item.discount }}%</div>
-                            <div style="width: 10%;">{{ item.amountUnit2 }}</div>
+                            <div style="width: 10%;">{{ getStringForMoney(item.amountUnit2) }}</div>
                             <div style="width: 20%;">
                                 <el-input-number v-model="item.count" :min="1" :max="item.totalCount"></el-input-number>
                             </div>
-                            <div style="width: 15%;">{{ item.amount }}</div>
+                            <div style="width: 15%;">{{ getStringForMoney(item.amount) }}</div>
                         </div>
                     </div>
                 </div>
@@ -38,7 +38,7 @@
             </div>
             <div class="cal">
                 <div style="margin-bottom: 20px;">
-                    Tổng: <b>{{ totalAmount }}</b>
+                    Tổng: <b>{{ getStringForMoney(totalAmount) }}</b>
                 </div>
                 <el-button type="warning" @click="createBill">Đặt hàng</el-button>
             </div>
@@ -173,6 +173,9 @@
                 if(index >= 0){
                     this.carts.splice(index, 1);
                 }
+            },
+            getStringForMoney: function(money){
+                return new Intl.NumberFormat('vn-VN').format(money) + "đ";
             }
         },
         computed:{

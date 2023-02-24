@@ -24,15 +24,15 @@
                 </div>
                 <div class="row-item" v-for="item in bill.billDetail">
                     <div><span style="color: #75c321;">{{ item.treeName }}</span> <b>x{{ item.count }}</b></div>
-                    <div><b>{{ item.amount }}</b></div>
+                    <div><b>{{ getStringForMoney(item.amount) }}</b></div>
                 </div>
                 <div class="row-item" >
                     <div><b>Giao nhận hàng</b></div>
-                    <div>{{ getStringTypePay(bill.typePay, bill.feeShip) }}</div>
+                    <div>{{ getStringTypePay(bill.typePay, getStringForMoney(bill.feeShip)) }}</div>
                 </div>
                 <div class="row-item" >
                     <div><b>Tổng cộng</b></div>
-                    <div><b>{{ bill.amount }}</b></div>
+                    <div><b>{{ getStringForMoney(bill.amount) }}</b></div>
                 </div>
                 <div class="row-item">
                     <div><b>Địa chỉ giao</b></div>
@@ -48,7 +48,7 @@
                     <div class="title2">{{ getStringStatus(bill.status) }}</div>
                     <div class="text-info">Mã đơn hàng: <b>{{ bill.code }}</b></div>
                     <div class="text-info">Ngày: <b>{{ getStringDateByLong(bill.created) }}</b></div>
-                    <div class="text-info">Tổng cộng: <b>{{ bill.amount }}</b></div>
+                    <div class="text-info">Tổng cộng: <b>{{ getStringForMoney(bill.amount) }}</b></div>
                     <div class="text-info">Phương thức thanh toán: <b>Trả tiền mặt khi nhận hàng</b></div>
                 </div>
 
@@ -265,8 +265,11 @@
                 if(type == 0){
                     return "Nhận tại cửa hàng (Miễn phí)"
                 }else{
-                    return `Giao hàng tận nơi ${feeShip}đ`;
+                    return `Giao hàng tận nơi ${feeShip}`;
                 }
+            },
+            getStringForMoney: function(money){
+                return new Intl.NumberFormat('vn-VN').format(money) + "đ";
             }
         },
 

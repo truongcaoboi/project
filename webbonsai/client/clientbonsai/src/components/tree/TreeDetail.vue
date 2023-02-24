@@ -7,7 +7,7 @@
         <div class="body">
             <div class="imgs">
                 <el-carousel height="700px" indicator-position="outside">
-                    <el-carousel-item v-for="item in (tree.images || [])" :key="item">
+                    <el-carousel-item v-for="item in (tree.images || [])" :key="item+(Math.random())">
                         <img class="image" :src="getUrlOfResource(item)">
                     </el-carousel-item>
                 </el-carousel>
@@ -17,12 +17,12 @@
                 <div class="text">Mã SP: {{ tree.code }}</div>
                 <div class="text" style="font-size: 24px; font-weight: bold;">{{ tree.name }}</div>
                 <div v-if="tree.discount > 0" style="display: flex; justify-content: space-between; align-items: center;">
-                    <div class="giamoi text">{{ getNewCost(tree) }}</div>
-                    <div class="text">Giá cũ: <span class="giacu">{{ tree.cost }}</span></div>
+                    <div class="giamoi text">{{ getStringForMoney(getNewCost(tree)) }}</div>
+                    <div class="text">Giá cũ: <span class="giacu">{{ getStringForMoney(tree.cost) }}</span></div>
                 </div>
-                <div v-else class="giamoi text">{{ tree.cost }}</div>
+                <div v-else class="giamoi text">{{ getStringForMoney(tree.cost) }}</div>
                 <div v-if="tree.discount > 0" class="text">
-                    Tiết kiệm: <span>{{ getSaving(tree) }}</span>
+                    Tiết kiệm: <span>{{ getStringForMoney(getSaving(tree)) }}</span>
                     <span style="padding: 10px 20px; background-color: red; color: white; font-weight: bold;border: 1px solid transparent; border-radius: 5px;">{{ tree.discount }}%</span>
                 </div>
                 <div class="text"><b>Mô tả</b></div>
@@ -163,6 +163,9 @@
                 store.setCarts(carts);
                 localStorage.setItem("carts", JSON.stringify(carts));
             },
+            getStringForMoney: function(money){
+                return new Intl.NumberFormat('vn-VN').format(money) + "đ";
+            }
         },
 
         computed: {

@@ -27,10 +27,10 @@
                                 <div class="discount" v-if="itemProduct.discount > 0">-{{ itemProduct.discount }}%</div>
                                 <div class="cost">
                                     <div v-if="itemProduct.discount > 0">
-                                        <span class="giamoi">{{ getNewCost(itemProduct) }}</span> - 
-                                        <span class="giacu">{{ itemProduct.cost }}</span>
+                                        <span class="giamoi">{{ getStringForMoney(getNewCost(itemProduct)) }}</span> - 
+                                        <span class="giacu">{{ getStringForMoney(itemProduct.cost) }}</span>
                                     </div>
-                                    <div v-else><span class="giamoi">{{ itemProduct.cost }}</span></div>
+                                    <div v-else><span class="giamoi">{{ getStringForMoney(itemProduct.cost) }}</span></div>
                                 </div>
                                 <div class="status">
                                     <span v-if="itemProduct.count > 0">Còn hàng</span>
@@ -358,6 +358,9 @@
         },
         prevPage: function(page){
             
+        },
+        getStringForMoney: function(money){
+            return new Intl.NumberFormat('vn-VN').format(money) + "đ";
         }
     },
     computed:{

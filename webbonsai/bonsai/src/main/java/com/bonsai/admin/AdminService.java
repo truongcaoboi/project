@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -103,6 +104,7 @@ public class AdminService {
                     }
                 }else{
                     admin.operations = operationService.getAll();
+                    admin.operationIds = admin.operations.stream().map(n -> n.id).collect(Collectors.toList());
                 }
             }
             return admin;

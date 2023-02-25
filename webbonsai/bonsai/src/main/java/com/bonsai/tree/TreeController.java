@@ -37,7 +37,8 @@ public class TreeController {
     }
 
     @GetMapping("/search")
-    public Response search(@RequestParam RequestSearchTree requestSearch, HttpServletRequest request){
+    public Response search(@RequestParam Map<String,Object> params, HttpServletRequest request){
+        RequestSearchTree requestSearch = gson.fromJson(gson.toJson(params), RequestSearchTree.class);
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "TREE:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             ResultPaging<Tree> result = treeService.search(requestSearch);

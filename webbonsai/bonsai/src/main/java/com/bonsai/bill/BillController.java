@@ -49,4 +49,33 @@ public class BillController {
             return Response.createResponseSuccess(result);
         }else return resultCheck;
     }
+
+    @PutMapping("/updateForUser")
+    public Response updateForUser(@RequestBody Bill bill, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForUser(request, "BILL:UPDATE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            Bill result = billService.updateBill(bill);
+            if(result == null) return Response.createResponseServerError();
+            return Response.createResponseSuccess(result);
+        }else return resultCheck;
+    }
+
+    @PutMapping("/update")
+    public Response update(@RequestBody Bill bill, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "BILL:UPDATE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            Bill result = billService.updateBill(bill);
+            if(result == null) return Response.createResponseServerError();
+            return Response.createResponseSuccess(result);
+        }else return resultCheck;
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Response delete(@PathVariable Long id, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "BILL:DELETE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            billService.deleteBill(id);
+            return Response.createResponseSuccess(null);
+        }else return resultCheck;
+    }
 }

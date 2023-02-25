@@ -67,7 +67,7 @@
 </template>
 <style scoped>
     .body{
-        width: 70%;
+        width: 80%;
         margin: auto;
         margin-top: 40px;
     }
@@ -281,7 +281,7 @@
                 }
             ],
             keyType: -1,
-            pageSize: 1,
+            pageSize: 8,
             pageNumber: 0,
             totalProduct: 0
         };
@@ -361,6 +361,13 @@
         },
         getStringForMoney: function(money){
             return new Intl.NumberFormat('vn-VN').format(money) + "đ";
+        },
+        checkKeyup(){
+            let keyCode = this.$event.keyCode;
+            alert(keyCode);
+            if(keyCode == 13){
+                this.searchTree();
+            }
         }
     },
     computed:{

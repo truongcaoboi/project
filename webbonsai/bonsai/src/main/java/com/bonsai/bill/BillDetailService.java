@@ -38,4 +38,8 @@ public class BillDetailService {
             e.printStackTrace();
         }
     }
+
+    public void deletes(List<Long> ids){
+        billDetailDao.deletes(ids);
+    }
 }

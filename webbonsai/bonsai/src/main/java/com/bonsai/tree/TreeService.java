@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -83,6 +84,7 @@ public class TreeService {
 
     public Tree createTree(Tree tree){
         try {
+            tree.code = "TREE"+ UUID.randomUUID().toString().replaceAll("-","").substring(0,12);
             tree.created = System.currentTimeMillis();
             tree.updated = System.currentTimeMillis();
             return treeDao.insert(tree);

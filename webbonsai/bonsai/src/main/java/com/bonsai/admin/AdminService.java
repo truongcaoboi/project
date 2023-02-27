@@ -9,14 +9,13 @@ import com.bonsai.core.dao.Paging;
 import com.bonsai.core.dao.ResultPaging;
 import com.bonsai.core.dao.Sort;
 import com.bonsai.operation.OperationService;
-import com.bonsai.operation.model.Operation;
 import com.bonsai.role.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminService {
@@ -36,7 +35,7 @@ public class AdminService {
             Sort sort = null;
             if(requestSearch.fieldSort != null && !requestSearch.fieldSort.isEmpty()){
                 if(requestSearch.typeSort != null && !requestSearch.typeSort.isEmpty()){
-                    Sort.Direction type = Sort.Direction.ACS;
+                    Sort.Direction type = Sort.Direction.ASC;
                     if(requestSearch.typeSort.equalsIgnoreCase(Sort.Direction.DESC.name())){
                         type = Sort.Direction.DESC;
                     }
@@ -52,10 +51,10 @@ public class AdminService {
             }
             String where = "id > 1";
             if(requestSearch.username != null && !requestSearch.username.isEmpty()){
-                where += " and username like '%" + requestSearch.username + "%'";
+                where += " and upper(username) like '%" + requestSearch.username.toUpperCase() + "%'";
             }
             if(requestSearch.fullname != null && !requestSearch.fullname.isEmpty()){
-                where += " and fullname like '%" + requestSearch.fullname + "%'";
+                where += " and upper(fullname) like '%" + requestSearch.fullname.toUpperCase() + "%'";
             }
             if(requestSearch.phone != null && !requestSearch.phone.isEmpty()){
                 where += " and phone like '%" + requestSearch.phone + "%'";
@@ -64,7 +63,7 @@ public class AdminService {
                 where += " and email like '%" + requestSearch.email + "%'";
             }
             if(requestSearch.address != null && !requestSearch.address.isEmpty()){
-                where += " and address like '%" + requestSearch.address + "%'";
+                where += " and upper(address) like '%" + requestSearch.address.toUpperCase() + "%'";
             }
             if(requestSearch.from != null && requestSearch.from > 0){
                 where += " and created >= "+ requestSearch.from;
@@ -103,6 +102,7 @@ public class AdminService {
                     }
                 }else{
                     admin.operations = operationService.getAll();
+                    admin.operationIds = admin.operations.stream().map(n -> n.id).collect(Collectors.toList());
                 }
             }
             return admin;

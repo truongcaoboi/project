@@ -27,7 +27,7 @@ public class ShipperService {
             Sort sort = null;
             if(requestSearch.fieldSort != null && !requestSearch.fieldSort.isEmpty()){
                 if(requestSearch.typeSort != null && !requestSearch.typeSort.isEmpty()){
-                    Sort.Direction type = Sort.Direction.ACS;
+                    Sort.Direction type = Sort.Direction.ASC;
                     if(requestSearch.typeSort.equalsIgnoreCase(Sort.Direction.DESC.name())){
                         type = Sort.Direction.DESC;
                     }
@@ -43,7 +43,7 @@ public class ShipperService {
             }
             String where = "id > 1";
             if(requestSearch.name != null && !requestSearch.name.isEmpty()){
-                where += " and name like '%" + requestSearch.name + "%'";
+                where += " and upper(name) like '%" + requestSearch.name.toUpperCase() + "%'";
             }
             if(requestSearch.phone != null && !requestSearch.phone.isEmpty()){
                 where += " and phone like '%" + requestSearch.phone + "%'";
@@ -52,7 +52,7 @@ public class ShipperService {
                 where += " and indentify_id like '%" + requestSearch.indentifyId + "%'";
             }
             if(requestSearch.address != null && !requestSearch.address.isEmpty()){
-                where += " and address like '%" + requestSearch.address + "%'";
+                where += " and upper(address) like '%" + requestSearch.address.toUpperCase() + "%'";
             }
             if(requestSearch.from != null && requestSearch.from > 0){
                 where += " and birth >= "+ requestSearch.from;
@@ -96,7 +96,7 @@ public class ShipperService {
         }
     }
 
-    public void delete(List<Long> ids){
+    public void deletes(List<Long> ids){
         try {
             shipperDao.deletes(ids);
         }catch (Exception e){

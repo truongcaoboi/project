@@ -6,11 +6,13 @@ import com.bonsai.common.Response;
 import com.bonsai.core.dao.ResultPaging;
 import com.bonsai.tree.model.RequestSearchTreeType;
 import com.bonsai.tree.model.TreeType;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/manage/treetype")
@@ -49,7 +51,9 @@ public class TreeTypeController {
     }
 
     @GetMapping("/search")
-    public Response search(@RequestParam RequestSearchTreeType requestSearch, HttpServletRequest request){
+    public Response search(@RequestParam Map<String,Object> params, HttpServletRequest request){
+        Gson gson = new Gson();
+        RequestSearchTreeType requestSearch = gson.fromJson(gson.toJson(params), RequestSearchTreeType.class);
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "TYPETREE:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             ResultPaging<TreeType> result = treeTypeService.search(requestSearch);

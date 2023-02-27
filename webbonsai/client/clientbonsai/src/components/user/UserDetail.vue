@@ -113,7 +113,7 @@
 
 <style scoped>
     .panel{
-        width: 70%;
+        width: 80%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 20px;

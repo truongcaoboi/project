@@ -6,12 +6,15 @@ import com.bonsai.common.Response;
 import com.bonsai.core.dao.ResultPaging;
 import com.bonsai.user.model.RequestSearchUser;
 import com.bonsai.user.model.User;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/manage/user")
@@ -21,7 +24,9 @@ public class UserController {
     @Autowired
     private AuthService authService;
     @GetMapping("/search")
-    public Response search(@RequestParam RequestSearchUser requestSearchUser, HttpServletRequest request){
+    public Response search(@RequestParam Map<String, Object> params, HttpServletRequest request){
+        Gson gson = new Gson();
+        RequestSearchUser requestSearchUser = gson.fromJson(gson.toJson(params), RequestSearchUser.class);
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "USER:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             ResultPaging<User> result = userService.search(requestSearchUser);
@@ -36,6 +41,11 @@ public class UserController {
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             User result = userService.createUser(user);
             if(result == null) return Response.createResponseServerError();
+            if(result.id == 0){
+                Response r = Response.createResponseError();
+                r.message = "Tên đăng nhập đã được sử dụng";
+                return r;
+            }
             return Response.createResponseSuccess(result);
         }else return resultCheck;
     }
@@ -87,6 +97,16 @@ public class UserController {
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "USER:DELETE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             userService.delete(id);
+            return Response.createResponseSuccess(null);
+        }else return resultCheck;
+    }
+
+    @DeleteMapping("/deletes")
+    public Response delete(@RequestParam(value = "ids") String ids, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "USER:DELETE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            Long[] userIds = new Gson().fromJson(String.format("[%s]",ids), Long[].class);
+            userService.deletes(Arrays.asList(userIds));
             return Response.createResponseSuccess(null);
         }else return resultCheck;
     }

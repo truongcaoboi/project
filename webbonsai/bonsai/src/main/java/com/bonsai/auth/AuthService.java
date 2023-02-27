@@ -28,7 +28,7 @@ public class AuthService {
     private AdminService adminService;
     @Autowired
     private OperationService operationService;
-    private final long EXPIRATION = 10*60*1000;
+    private final long EXPIRATION = 24*60*60*1000;
 
     private Map<String,Map<String,Object>> session = new HashMap<>();
 
@@ -49,7 +49,7 @@ public class AuthService {
                     payload.put("username", user.username);
                     payload.put("fullname", user.fullname);
                     payload.put("password", password);
-                    payload.put("operations", new HashSet<String>(Arrays.asList(new String[]{"USER:VIEW","USER:UPDATE", "BILL:CREATE", "BILL:VIEW"})));
+                    payload.put("operations", new HashSet<String>(Arrays.asList(new String[]{"USER:VIEW","USER:UPDATE", "BILL:CREATE", "BILL:VIEW","BILL:UPDATE"})));
                     payload.put("expired", System.currentTimeMillis() + EXPIRATION);
                     payload.put("type", 1);
                     String key = UUID.randomUUID().toString();

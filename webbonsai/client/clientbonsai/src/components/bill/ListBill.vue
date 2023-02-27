@@ -59,6 +59,10 @@
                     <div class="text-info">Email: <b>{{ user.email }}</b></div>
                     <div class="text-info">Địa chỉ: <b>{{ user.address }}</b></div>
                 </div>
+
+                <div v-if="bill.status == 0" style="margin-bottom: 20px;text-align: center;">
+                    <el-button type="success" @click="confirmDelete(billId)">Hủy</el-button>
+                </div>
             </div>
         </div>
         <Footer></Footer>
@@ -67,7 +71,7 @@
 
 <style scoped>
     .box{
-        width: 70%;
+        width: 80%;
         margin-left: auto;
         margin-right: auto;
         margin-top: 20px;
@@ -242,6 +246,32 @@
                     }
                 }
             },
+            updateStatusBill: async function(billId){
+                let res = await RestFul.putWithToken("/api/manage/bill/updateForUser",{id:billId, status: 4});
+                if(res != null){
+                    if(res.statusCode == 200){
+                        this.$message.success(res.message);
+                        this.getBillById();
+                    }else{
+                        this.$message.error(res.message);
+                        if(res.statusCode == 401 || res.statusCode == 402){
+                            this.$router.push('/login');
+                        }
+                    }
+                }else this.$message.error("Error!");
+            },
+            confirmDelete: function(billId){
+                let me = this;
+                this.$confirm.confirm('Bạn có muốn hủy đơn này?', 'Xác nhận hủy đơn', {
+                    confirmButtonText: 'Ok',
+                    cancelButtonText: 'Hủy',
+                    type: 'warning'
+                }).then(() => {
+                    me.updateStatusBill(billId);
+                }).catch(() => {
+                    return;    
+                });
+            },
             getStringDateByLong: function(value){
                 let date = new Date(value);
                 let ngay = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate();
@@ -254,12 +284,16 @@
             },
             getStringStatus: function(status){
                 if(status == 0){
-                    return "Đơn hàng của bạn đã được nhận";
-                }else if(status == 1){
+                    return "Đơn hàng của bạn đặt thành công";
+                } else if(status == 1){
+                    return "Đơn hàng của bạn đã được xác nhận"
+                }else if(status == 2){
                     return "Đơn hàng của bạn đã được vận chuyển"
-                }else{
-                    return "";
-                }
+                }else if(status == 3){
+                    return "Đơn hàng của bạn đã hoàn thành";
+                }else if(status == 4){
+                    return "Đơn hàng của bạn đã hủy";
+                }else return "";
             },
             getStringTypePay: function(type, feeShip){
                 if(type == 0){

@@ -3,7 +3,7 @@
         <div class="header">
             <div class="header-left">
                 <div class="logo" @click="$router.push('/')"></div>
-                <div class="shopname">Cây cảnh bonsai</div>
+                <div class="shopname">CÂY CẢNH BONSAI</div>
             </div>
             <div class="header-right">
                 <div class="hotline">
@@ -24,7 +24,7 @@
 
 <style scoped>
     .header {
-        width: 70%;
+        width: 80%;
         background-color: #75c321;
         height: 75px;
         margin: auto;
@@ -50,6 +50,7 @@
         font-weight: bold;
         color: white;
         margin-left: 16px;
+        font-family: cursive;
     }
     .header-right{
         font-size: 14px;

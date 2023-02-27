@@ -49,7 +49,7 @@ public class RoleService {
             Sort sort = null;
             if(requestSearch.fieldSort != null && !requestSearch.fieldSort.isEmpty()){
                 if(requestSearch.typeSort != null && !requestSearch.typeSort.isEmpty()){
-                    Sort.Direction type = Sort.Direction.ACS;
+                    Sort.Direction type = Sort.Direction.ASC;
                     if(requestSearch.typeSort.equalsIgnoreCase(Sort.Direction.DESC.name())){
                         type = Sort.Direction.DESC;
                     }
@@ -65,7 +65,7 @@ public class RoleService {
             }
             String where = "1 = 1";
             if(requestSearch.name != null && !requestSearch.name.isEmpty()){
-                where += " and name like '%" + requestSearch.name + "%'";
+                where += " and upper(name) like '%" + requestSearch.name.toUpperCase() + "%'";
             }
             return roleDao.find(where, sort, paging);
         }catch (Exception e){

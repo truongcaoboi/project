@@ -6,10 +6,13 @@ import com.bonsai.common.Response;
 import com.bonsai.core.dao.ResultPaging;
 import com.bonsai.shipper.model.RequestSearchShipper;
 import com.bonsai.shipper.model.Shipper;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/manage/shipper")
@@ -21,7 +24,9 @@ public class ShipperController {
     private ShipperService shipperService;
 
     @GetMapping("/search")
-    public Response search(@RequestParam RequestSearchShipper requestSearch, HttpServletRequest request){
+    public Response search(@RequestParam Map<String,Object> params, HttpServletRequest request){
+        Gson gson = new Gson();
+        RequestSearchShipper requestSearch = gson.fromJson(gson.toJson(params), RequestSearchShipper.class);
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "SHIPPER:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             ResultPaging<Shipper> result = shipperService.search(requestSearch);
@@ -30,8 +35,8 @@ public class ShipperController {
         }else return resultCheck;
     }
 
-    @PutMapping("/getById/{id}")
-    public Response updateShipper(@PathVariable Long id, HttpServletRequest request){
+    @GetMapping("/getById/{id}")
+    public Response getById(@PathVariable Long id, HttpServletRequest request){
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "SHIPPER:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             Shipper result = shipperService.getById(id);
@@ -54,7 +59,7 @@ public class ShipperController {
     public Response updateShipper(@RequestBody Shipper shipper, HttpServletRequest request){
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "SHIPPER:UPDATE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
-            Shipper result = shipperService.createShipper(shipper);
+            Shipper result = shipperService.updateShipper(shipper);
             if(result == null) return Response.createResponseServerError();
             return Response.createResponseSuccess(result);
         }else return resultCheck;
@@ -65,6 +70,16 @@ public class ShipperController {
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "SHIPPER:DELETE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             shipperService.delete(id);
+            return Response.createResponseSuccess(null);
+        }else return resultCheck;
+    }
+
+    @DeleteMapping("/deletes")
+    public Response delete(@RequestParam(value = "ids") String ids, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "SHIPPER:DELETE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            Long[] shipperIds = new Gson().fromJson(ids, Long[].class);
+            shipperService.deletes(Arrays.asList(shipperIds));
             return Response.createResponseSuccess(null);
         }else return resultCheck;
     }

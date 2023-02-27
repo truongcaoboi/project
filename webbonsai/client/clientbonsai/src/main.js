@@ -6,10 +6,12 @@ import 'element-ui/lib/theme-chalk/index.css';
 import App from './App'
 import router from './router'
 import { Message } from 'element-ui';
+import { MessageBox } from 'element-ui';
 
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$message = Message;
+Vue.prototype.$confirm = MessageBox;
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

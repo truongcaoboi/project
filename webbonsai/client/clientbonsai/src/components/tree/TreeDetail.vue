@@ -41,7 +41,7 @@
 <style scoped>
 
     .body{
-        width: 70%;
+        width: 80%;
         margin: auto;
         display: flex;
         justify-content: space-between;
@@ -49,7 +49,7 @@
     }
 
     .imgs{
-        width: 75%;
+        width: 70%;
         min-height: 500px;
         max-height: 1000px;
     }
@@ -76,7 +76,7 @@
     }
 
     .content{
-        width: 24%;
+        width: 29%;
     }
     .text{
         text-align: left;
@@ -162,6 +162,7 @@
                 }
                 store.setCarts(carts);
                 localStorage.setItem("carts", JSON.stringify(carts));
+                this.$message.success("Đã thêm vào giỏ hàng");
             },
             getStringForMoney: function(money){
                 return new Intl.NumberFormat('vn-VN').format(money) + "đ";

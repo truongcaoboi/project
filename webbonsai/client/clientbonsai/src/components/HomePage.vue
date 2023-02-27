@@ -67,7 +67,7 @@
 </template>
 <style scoped>
     .body{
-        width: 70%;
+        width: 80%;
         margin: auto;
         margin-top: 40px;
     }
@@ -281,7 +281,7 @@
                 }
             ],
             keyType: -1,
-            pageSize: 1,
+            pageSize: 8,
             pageNumber: 0,
             totalProduct: 0
         };
@@ -342,6 +342,7 @@
             }
             store.setCarts(carts);
             localStorage.setItem("carts", JSON.stringify(carts));
+            this.$message.success("Đã thêm vào giỏ hàng")
         },
         getNewCost: function(product){
             return Math.round(product.cost * (100 - product.discount) / 100);
@@ -361,6 +362,13 @@
         },
         getStringForMoney: function(money){
             return new Intl.NumberFormat('vn-VN').format(money) + "đ";
+        },
+        checkKeyup(){
+            let keyCode = this.$event.keyCode;
+            alert(keyCode);
+            if(keyCode == 13){
+                this.searchTree();
+            }
         }
     },
     computed:{

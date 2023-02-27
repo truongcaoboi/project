@@ -8,11 +8,11 @@ import com.bonsai.core.dao.Sort;
 import com.bonsai.tree.model.RequestSearchTree;
 import com.bonsai.tree.model.Tree;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,7 +44,7 @@ public class TreeService {
             Sort sort = null;
             if(requestSearch.fieldSort != null && !requestSearch.fieldSort.isEmpty()){
                 if(requestSearch.typeSort != null && !requestSearch.typeSort.isEmpty()){
-                    Sort.Direction type = Sort.Direction.ACS;
+                    Sort.Direction type = Sort.Direction.ASC;
                     if(requestSearch.typeSort.equalsIgnoreCase(Sort.Direction.DESC.name())){
                         type = Sort.Direction.DESC;
                     }
@@ -83,6 +83,7 @@ public class TreeService {
 
     public Tree createTree(Tree tree){
         try {
+            tree.code = "TREE"+ UUID.randomUUID().toString().replaceAll("-","").substring(0,6).toUpperCase();
             tree.created = System.currentTimeMillis();
             tree.updated = System.currentTimeMillis();
             return treeDao.insert(tree);

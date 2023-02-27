@@ -6,11 +6,14 @@ import com.bonsai.common.Response;
 import com.bonsai.core.dao.ResultPaging;
 import com.bonsai.role.model.RequestSearchRole;
 import com.bonsai.role.model.Role;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/manage/role")
@@ -42,7 +45,9 @@ public class RoleController {
     }
 
     @GetMapping("/search")
-    public Response search(@RequestParam RequestSearchRole requestSearch, HttpServletRequest request){
+    public Response search(@RequestParam Map<String,Object> params, HttpServletRequest request){
+        Gson gson = new Gson();
+        RequestSearchRole requestSearch = gson.fromJson(gson.toJson(params), RequestSearchRole.class);
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "ROLE:VIEW");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             ResultPaging<Role> result = roleService.search(requestSearch);
@@ -76,6 +81,16 @@ public class RoleController {
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "ROLE:DELETE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
             roleService.delete(id);
+            return Response.createResponseSuccess(null);
+        }else return resultCheck;
+    }
+
+    @DeleteMapping("/deletes")
+    public Response delete(@RequestParam(value = "ids") String ids, HttpServletRequest request){
+        Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "ROLE:DELETE");
+        if(resultCheck.statusCode == Contants.StatusCode.OK){
+            Long[] roleIds = new Gson().fromJson(ids, Long[].class);
+            roleService.deletes(Arrays.asList(roleIds));
             return Response.createResponseSuccess(null);
         }else return resultCheck;
     }

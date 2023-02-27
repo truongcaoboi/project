@@ -27,7 +27,7 @@ public class UserService {
             Sort sort = null;
             if(requestSearch.fieldSort != null && !requestSearch.fieldSort.isEmpty()){
                 if(requestSearch.typeSort != null && !requestSearch.typeSort.isEmpty()){
-                    Sort.Direction type = Sort.Direction.ACS;
+                    Sort.Direction type = Sort.Direction.ASC;
                     if(requestSearch.typeSort.equalsIgnoreCase(Sort.Direction.DESC.name())){
                         type = Sort.Direction.DESC;
                     }
@@ -43,10 +43,10 @@ public class UserService {
             }
             String where = "1 = 1";
             if(requestSearch.username != null && !requestSearch.username.isEmpty()){
-                where += " and username like '%" + requestSearch.username + "%'";
+                where += " and upper(username) like '%" + requestSearch.username.toUpperCase() + "%'";
             }
             if(requestSearch.fullname != null && !requestSearch.fullname.isEmpty()){
-                where += " and fullname like '%" + requestSearch.fullname + "%'";
+                where += " and upper(fullname) like '%" + requestSearch.fullname.toUpperCase() + "%'";
             }
             if(requestSearch.phone != null && !requestSearch.phone.isEmpty()){
                 where += " and phone like '%" + requestSearch.phone + "%'";
@@ -55,7 +55,7 @@ public class UserService {
                 where += " and email like '%" + requestSearch.email + "%'";
             }
             if(requestSearch.address != null && !requestSearch.address.isEmpty()){
-                where += " and address like '%" + requestSearch.address + "%'";
+                where += " and upper(address) like '%" + requestSearch.address.toUpperCase() + "%'";
             }
             if(requestSearch.from != null && requestSearch.from > 0){
                 where += " and created >= "+ requestSearch.from;
@@ -63,7 +63,7 @@ public class UserService {
             if(requestSearch.to != null && requestSearch.to > 0){
                 where += " and created <= "+ requestSearch.to;
             }
-            if(requestSearch.status != null){
+            if(requestSearch.status != null && requestSearch.status >= 0){
                 where += " and status = "+ requestSearch.status;
             }
             return userDao.find(where, sort, paging);
@@ -85,6 +85,9 @@ public class UserService {
         try {
             user.created = new Date().getTime();
             user.updated = new Date().getTime();
+            if(user.password == null){
+                user.password = "123456";
+            }
             user.password = AuthService.encryptPassword(user.password);
             return userDao.insert(user);
         }catch (Exception e){

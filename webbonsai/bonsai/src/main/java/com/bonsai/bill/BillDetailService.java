@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class BillDetailService {
@@ -28,6 +29,16 @@ public class BillDetailService {
         return null;
     }
 
+    public List<BillDetail> getBillDetailByListBillId(List<Long> ids){
+        try {
+            String where = String.format("bill_id in (%s)", ids.stream().map(n -> String.valueOf(n)).collect(Collectors.joining(",")));
+            return billDetailDao.find(where);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public void createBillDetailForBill(Bill bill){
         try {
             for(BillDetail billDetail : bill.billDetail){
@@ -37,5 +48,9 @@ public class BillDetailService {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public void deletes(List<Long> ids){
+        billDetailDao.deletes(ids);
     }
 }

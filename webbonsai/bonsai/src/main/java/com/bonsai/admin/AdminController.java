@@ -68,7 +68,7 @@ public class AdminController {
     public Response delete(@RequestParam(value = "ids") String ids, HttpServletRequest request){
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "ADMIN:DELETE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
-            Long[] adminIds = new Gson().fromJson(ids, Long[].class);
+            Long[] adminIds = new Gson().fromJson(String.format("[%s]",ids), Long[].class);
             adminService.deletes(Arrays.asList(adminIds));
             return Response.createResponseSuccess(null);
         }else return resultCheck;

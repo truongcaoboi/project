@@ -39,6 +39,11 @@ public class TreeService {
         return null;
     }
 
+    public List<Tree> getByTreeType(Long treeTypeId){
+        String where = "type_id = "+treeTypeId;
+        return treeDao.find(where);
+    }
+
     public ResultPaging<Tree> search(RequestSearchTree requestSearch){
         try {
             Sort sort = null;

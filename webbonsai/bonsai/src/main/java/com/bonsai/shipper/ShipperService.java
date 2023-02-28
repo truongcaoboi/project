@@ -60,7 +60,7 @@ public class ShipperService {
             if(requestSearch.to != null && requestSearch.to > 0){
                 where += " and birth <= "+ requestSearch.to;
             }
-            if(requestSearch.status != null){
+            if(requestSearch.status != null && requestSearch.status >= 0){
                 where += " and status = "+ requestSearch.status;
             }
             return shipperDao.find(where, sort, paging);

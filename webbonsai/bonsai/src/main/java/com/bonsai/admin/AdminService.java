@@ -71,7 +71,7 @@ public class AdminService {
             if(requestSearch.to != null && requestSearch.to > 0){
                 where += " and created <= "+ requestSearch.to;
             }
-            if(requestSearch.status != null){
+            if(requestSearch.status != null && requestSearch.status >= 0){
                 where += " and status = "+ requestSearch.status;
             }
             return adminDao.find(where, sort, paging);
@@ -116,6 +116,9 @@ public class AdminService {
         try {
             admin.created = System.currentTimeMillis();
             admin.updated = System.currentTimeMillis();
+            if(admin.password == null){
+                admin.password = "123456";
+            }
             admin.password = AuthService.encryptPassword(admin.password);
             return adminDao.insert(admin);
         }catch (Exception e){

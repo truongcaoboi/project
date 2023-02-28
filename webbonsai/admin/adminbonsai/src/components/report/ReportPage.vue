@@ -1,6 +1,6 @@
 <template>
     <div>
-        Report Page
+        Chức năng đang hoàn thiện
     </div>
 </template>
 

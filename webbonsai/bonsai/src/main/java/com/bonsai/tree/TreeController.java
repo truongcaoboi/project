@@ -105,7 +105,7 @@ public class TreeController {
     public Response delete(@RequestParam(value = "ids") String ids, HttpServletRequest request){
         Response resultCheck = authService.checkSessionAndPermissionForAdmin(request, "TREE:DELETE");
         if(resultCheck.statusCode == Contants.StatusCode.OK){
-            Long[] treeIds = new Gson().fromJson(ids, Long[].class);
+            Long[] treeIds = new Gson().fromJson(String.format("[%s]",ids), Long[].class);
             treeService.deletes(Arrays.asList(treeIds));
             return Response.createResponseSuccess(null);
         }else return resultCheck;

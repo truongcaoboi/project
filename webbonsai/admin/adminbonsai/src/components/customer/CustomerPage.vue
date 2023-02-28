@@ -98,7 +98,7 @@
                 </el-table>
                 <el-pagination style="margin-top: 12px;"
                     background
-                    :current-page="params.page"
+                    :current-page="params.page + 1"
                     :page-size="params.limit"
                     :page-sizes="[5,10,15,20]"
                     layout="prev, pager, next, sizes"
@@ -355,7 +355,7 @@ import { RestFul } from '../../restful';
                 this.searchUser();
             },
             handleCurrentChange: function(newPage){
-                this.params.page = newPage;
+                this.params.page = newPage - 1;
                 this.searchUser();
             },
             getNameStatus: function(status){
@@ -413,6 +413,7 @@ import { RestFul } from '../../restful';
             openAddCustomer: function(){
                 this.customer = JSON.parse(JSON.stringify(this.customerDefault));
                 this.isOpenModal = true;
+                this.$refs['userDetail'].resetFields();
                 this.typeModal = 0;
             },
             submitForm(formName) {

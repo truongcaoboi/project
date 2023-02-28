@@ -1,6 +1,6 @@
 <template>
     <div>
-        Dashboard Page
+        Chức năng đang hoàn thiện
     </div>
 </template>
 

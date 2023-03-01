@@ -79,6 +79,9 @@ public class TreeService {
             if(requestSearch.typeId != null && requestSearch.typeId > 0){
                 where += " and type_id = "+ requestSearch.typeId;
             }
+            if(requestSearch.count != null && requestSearch.count > 0){
+                where += " and count > 0";
+            }
             return treeDao.find(where, sort, paging);
         }catch (Exception e){
             e.printStackTrace();

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class ShipperService {
@@ -45,6 +46,9 @@ public class ShipperService {
             if(requestSearch.name != null && !requestSearch.name.isEmpty()){
                 where += " and upper(name) like '%" + requestSearch.name.toUpperCase() + "%'";
             }
+            if(requestSearch.code != null && !requestSearch.code.isEmpty()){
+                where += " and upper(code) like '%" + requestSearch.code.toUpperCase() + "%'";
+            }
             if(requestSearch.phone != null && !requestSearch.phone.isEmpty()){
                 where += " and phone like '%" + requestSearch.phone + "%'";
             }
@@ -72,6 +76,7 @@ public class ShipperService {
 
     public Shipper createShipper(Shipper shipper){
         try {
+            shipper.code = "NV"+ UUID.randomUUID().toString().replaceAll("-","").substring(0,6).toUpperCase();
             return shipperDao.insert(shipper);
         }catch (Exception e){
             e.printStackTrace();

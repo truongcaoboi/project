@@ -30,7 +30,7 @@ public class BillService {
 
     public Bill createBill(Bill bill){
         try {
-            bill.code = "BILL"+ UUID.randomUUID().toString().replaceAll("-","").substring(0,12);
+            bill.code = "BILL"+ UUID.randomUUID().toString().replaceAll("-","").substring(0,12).toUpperCase();
             bill.created = System.currentTimeMillis();
             bill.updated = System.currentTimeMillis();
             bill = billDao.insert(bill);
@@ -116,12 +116,19 @@ public class BillService {
             if(requestSearch.to != null && requestSearch.to > 0){
                 where += " and created <= "+ requestSearch.to;
             }
-            if(requestSearch.status != null){
+            if(requestSearch.status != null && requestSearch.status >= 0){
                 where += " and status = "+ requestSearch.status;
             }
 
-            if(requestSearch.receiver != null){
+            if(requestSearch.typePay != null && requestSearch.typePay >= 0){
+                where += " and typepay = "+ requestSearch.typePay;
+            }
+
+            if(requestSearch.receiver != null && requestSearch.receiver > 0){
                 where += " and receiver = "+ requestSearch.receiver;
+            }
+            if(requestSearch.sender != null && requestSearch.sender > 0){
+                where += " and sender = "+ requestSearch.sender;
             }
             return billDao.find(where,sort, paging);
         }catch (Exception e){

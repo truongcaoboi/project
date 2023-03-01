@@ -21,6 +21,6 @@ new Vue({
   template: '<App/>',
   data:{
     id: 1,
-    name: "truongdx"
+    name: ""
   }
 })

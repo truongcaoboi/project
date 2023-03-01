@@ -10,6 +10,10 @@
             </div>
             <div class="filter">
                 <div class="item-filter">
+                    <div class="item-filter-title">Mã nhân viên</div>
+                    <el-input v-model="params.code" placeholder="-- Tìm theo mã nhân viên"></el-input>
+                </div>
+                <div class="item-filter">
                     <div class="item-filter-title">Tên đầy đủ</div>
                     <el-input v-model="params.name" placeholder="-- Tìm theo tên đầy đủ"></el-input>
                 </div>
@@ -44,6 +48,13 @@
                     <el-table-column
                         type="selection"
                         width="55">
+                    </el-table-column>
+                    <el-table-column
+                        prop="code"
+                        label="Mã nhân viên"
+                        sortable
+                        width="180">
+                        <template slot-scope="scope">{{ scope.row.code }}</template>
                     </el-table-column>
                     <el-table-column
                         prop="name"
@@ -112,6 +123,12 @@
                 :before-close="handleCloseModal">
                 <div style="padding: 20px; width: calc(100% - 40px);">
                     <el-form :model="employee" ref="employeeDetail" label-width="150px" class="">
+                        <el-form-item v-if="typeModal == 1"
+                            prop="code"
+                            label="Mã nhân viên"
+                        >
+                            <el-input disabled v-model="employee.code"></el-input>
+                        </el-form-item>
                         <el-form-item
                             prop="name"
                             label="Tên đầy đủ"
@@ -218,6 +235,7 @@ import { RestFul } from '../../restful';
         data: function(){
             return {
                 params: {
+                    code:"",
                     indentifyId:"",
                     name: "",
                     phone:"",
@@ -235,6 +253,7 @@ import { RestFul } from '../../restful';
 
                 employeeDefault:{
                     id: 0,
+                    code:"",
                     username:"",
                     fullname: "",
                     phone:"",
@@ -245,6 +264,7 @@ import { RestFul } from '../../restful';
                 },
                 employee:{
                     id: 0,
+                    code:"",
                     name:"",
                     phone:"",
                     email: "",
